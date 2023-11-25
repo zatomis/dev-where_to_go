@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from places.models import Place, Pictures
+from django.http import Http404, JsonResponse
 
 
 def show_main(request):
@@ -40,3 +41,22 @@ def show_main(request):
 
     return render(request, 'index.html', context={'data': places_geojson})
 
+def place_details(request, place_id):
+    try:
+        place = Place.objects.prefetch_related('images').get(pk=place_id)
+    except Place.DoesNotExist:
+        raise Http404("Нет таких мест.")
+    pics = []
+    for image in place.images.all():
+        pics.append(image.picture.url)
+    place_details = {
+        "title": place.title,
+        "description_short": place.description_short,
+        "description_long": place.description_long,
+        "coordinates": {
+            "lng": place.lon,
+            "lat": place.lat,
+        },
+        "imgs": pics,
+        }
+    return JsonResponse(place_details, safe=False, json_dumps_params={'ensure_ascii': False, 'indent': 4})
