@@ -22,6 +22,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+CSRF_COOKIE_HTTPONLY = env.bool('CSRF_COOKIE_HTTPONLY', False)
+
 SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = env.bool('DEBUG', True)
@@ -29,6 +31,7 @@ DEBUG = env.bool('DEBUG', True)
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', '127.0.0.1')
 
 CSRF_COOKIE_SECURE = env.bool('CSRF_COOKIE_SECURE', False)
+CSRF_COOKIE_HTTPONLY
 
 SESSION_COOKIE_SECURE = env.bool('SESSION_COOKIE_SECURE', False)
 
@@ -51,6 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'adminsortable2',
     'places'
 ]
 

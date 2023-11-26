@@ -10,13 +10,14 @@ class Place(models.Model):
     lon = models.FloatField(blank=False, verbose_name='долгота')
     lat = models.FloatField(blank=False, verbose_name='широта')
     placeID = models.SlugField(max_length=150, default='', verbose_name='ID места', blank=True)
+    place_order = models.SmallIntegerField(default=0)
 
     def _create_slug(self):
         slug = slugify(self.title, allow_unicode=True)
 
         translate_string = slug.translate(str.maketrans(
                 "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
-                "abvgdeejzijklmnoprstufhzcss_y_euaABVGDEEJZIJKLMNOPRSTUFHZCSS_I_EYI"))
+                "abvgdeejzijklmnoprstufhzcss_y_euaABVGDEEJZIJKLMNOPRSTUFHZCSS_I_EUY"))
         slug = f'{translate_string.capitalize()}-{uuid4().hex[:8]}'
         self.placeID = slug
 
@@ -31,15 +32,18 @@ class Place(models.Model):
     class Meta:
         verbose_name = 'Место'
         verbose_name_plural = 'Места'
+        ordering = ['place_order']
 
 
 class Pictures(models.Model):
     place = models.ForeignKey(Place, on_delete=models.PROTECT, related_name='images', verbose_name='Место')
     picture = models.ImageField(upload_to='place_pic', verbose_name='Картинки')
-
-    def __str__(self):
-        return f'{self.picture}'
+    pic_order = models.SmallIntegerField(default=0)
 
     class Meta:
         verbose_name = 'Картинка'
         verbose_name_plural = 'Картинки'
+        ordering = ['pic_order']
+
+    def __str__(self):
+        return f'{self.picture}'
