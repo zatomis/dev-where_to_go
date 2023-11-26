@@ -13,7 +13,11 @@ class Place(models.Model):
 
     def _create_slug(self):
         slug = slugify(self.title, allow_unicode=True)
-        slug = f'{slug}-{uuid4().hex[:8]}'
+
+        translate_string = slug.translate(str.maketrans(
+                "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+                "abvgdeejzijklmnoprstufhzcss_y_euaABVGDEEJZIJKLMNOPRSTUFHZCSS_I_EYI"))
+        slug = f'{translate_string.capitalize()}-{uuid4().hex[:8]}'
         self.placeID = slug
 
     def save(self, *args, **kwargs):

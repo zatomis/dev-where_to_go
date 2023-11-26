@@ -1,8 +1,13 @@
 from django.contrib import admin
-# Register your models here.
 from places.models import Place, Pictures
 
 admin.site.register(Pictures)
+
+
+class ImageInline(admin.TabularInline):
+    model = Pictures
+    extra = 1
+
 
 @admin.register(Place)
 class PlaceAdmin(admin.ModelAdmin):
@@ -11,3 +16,4 @@ class PlaceAdmin(admin.ModelAdmin):
         "title",
         "description_short",
     )
+    inlines = (ImageInline, )
