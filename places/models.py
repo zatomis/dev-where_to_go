@@ -11,7 +11,7 @@ class Place(models.Model):
     lon = models.FloatField(blank=False, verbose_name='долгота')
     lat = models.FloatField(blank=False, verbose_name='широта')
     placeID = models.SlugField(max_length=150, default='', verbose_name='ID места', blank=True)
-    place_order = models.SmallIntegerField(default=0)
+    place_order = models.SmallIntegerField(default=0, verbose_name='Порядок сортировки')
 
     def _create_slug(self):
         slug = slugify(self.title, allow_unicode=True)
@@ -39,7 +39,7 @@ class Place(models.Model):
 class Pictures(models.Model):
     place = models.ForeignKey(Place, on_delete=models.PROTECT, related_name='images', verbose_name='Место')
     picture = models.ImageField(upload_to='place_pic', verbose_name='Картинки')
-    pic_order = models.SmallIntegerField(default=0)
+    pic_order = models.SmallIntegerField(default=0, verbose_name='Порядок сортировки')
 
     class Meta:
         verbose_name = 'Картинка'
