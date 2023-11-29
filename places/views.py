@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from places.models import Place
-from django.http import Http404, JsonResponse
+from django.http import JsonResponse
 from django.urls import reverse
 from urllib.parse import urljoin
 
@@ -42,7 +42,7 @@ def show_main(request):
 
     return render(request, 'index.html', context={'data': places_geojson})
 
-def place_details(request, place_id):
+def get_place_details(request, place_id):
     place = get_object_or_404(Place.objects.prefetch_related('images'), id=place_id)
     pics = [image.picture.url for image in place.images.all()]
     place_details = {
@@ -55,4 +55,4 @@ def place_details(request, place_id):
         },
         "imgs": pics,
         }
-    return JsonResponse(place_details, safe=False, json_dumps_params={'ensure_ascii': False, 'indent': 8})
+    return JsonResponse(get_place_details, safe=False, json_dumps_params={'ensure_ascii': False, 'indent': 8})
