@@ -1,20 +1,20 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
-from places.models import Place, Pictures
+from places.models import Place, Picture
 from adminsortable2.admin import SortableInlineAdminMixin, SortableAdminBase
 
 
-admin.site.register(Pictures)
+admin.site.register(Picture)
 
 
 class ImageInline(SortableInlineAdminMixin, admin.TabularInline):
-    model = Pictures
+    model = Picture
     extra = 1
     readonly_fields = ["_pic_preview"]
 
     def _pic_preview(self, obj):
-        return format_html('<img src="{}" style="max-height: 150px;"/>', mark_safe(obj.picture.url))
+        return format_html('<img src="{}" style="max-height:150px; width:auto"/>', mark_safe(obj.picture.url))
 
 
 @admin.register(Place)

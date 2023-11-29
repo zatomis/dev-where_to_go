@@ -36,7 +36,7 @@ class Place(models.Model):
         ordering = ['place_order']
 
 
-class Pictures(models.Model):
+class Picture(models.Model):
     place = models.ForeignKey(Place, on_delete=models.PROTECT, related_name='images', verbose_name='Место')
     picture = models.ImageField(upload_to='place_pic', verbose_name='Картинки')
     pic_order = models.SmallIntegerField(default=0, verbose_name='Порядок сортировки')
