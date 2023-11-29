@@ -13,8 +13,8 @@ def show_main(request):
         pictures = [pic.picture.url for pic in place.images.all()]
         place_details = {
             "title": place.title,
-            "description_short": place.description_short,
-            "description_long": place.description_long,
+            "short_description": place.description_short,
+            "long_description": place.description_long,
             "coordinates": {
                 "lng": place.lon,
                 "lat": place.lat,

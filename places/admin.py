@@ -24,6 +24,6 @@ class PlaceAdmin(SortableAdminBase, admin.ModelAdmin):
     list_display = (
         "id",
         "title",
-        "description_short",
+        "short_description",
     )
     inlines = (ImageInline, )
