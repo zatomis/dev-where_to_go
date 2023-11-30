@@ -4,8 +4,11 @@ from django.utils.safestring import mark_safe
 from places.models import Place, Picture
 from adminsortable2.admin import SortableInlineAdminMixin, SortableAdminBase
 
+class PlacePicAdmin(admin.ModelAdmin):
+    raw_id_fields = ['place_pic']
 
-admin.site.register(Picture)
+
+admin.site.register(Picture, PlacePicAdmin)
 
 
 class ImageInline(SortableInlineAdminMixin, admin.TabularInline):
