@@ -13,13 +13,13 @@ class ImageInline(SortableInlineAdminMixin, admin.TabularInline):
     extra = 1
     readonly_fields = ["_pic_preview"]
 
-    def _pic_preview(self, obj):
-        return format_html('<img src="{}" style="max-height:150px; width:auto"/>', mark_safe(obj.picture.url))
+    def _pic_preview(self, model):
+        return format_html('<img src="{}" style="max-height:150px; width:auto"/>', mark_safe(model.picture.url))
 
 
 @admin.register(Place)
 class PlaceAdmin(SortableAdminBase, admin.ModelAdmin):
-    readonly_fields = ["place_order", "placeID"]
+    readonly_fields = ["place_order", "unique_location"]
 
     list_display = (
         "id",

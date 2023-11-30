@@ -10,7 +10,7 @@ def show_main(request):
     for place in places:
         main_url = request.build_absolute_uri()
         path_url = reverse("places", args=(place.pk,))
-        pictures = [pic.picture.url for pic in place.images.all()]
+        pictures = [pic.image.url for pic in place.images.all()]
         place_details = {
             "title": place.title,
             "description_short": place.description_short,
@@ -29,7 +29,7 @@ def show_main(request):
             },
             "properties": {
                 "title":place.description_short,
-                "placeId": place.placeID,
+                "unique_location": place.unique_location,
                 "detailsUrl": urljoin(main_url, path_url),
             }
         }
@@ -44,7 +44,7 @@ def show_main(request):
 
 def get_place_details(request, place_id):
     place = get_object_or_404(Place.objects.prefetch_related('images'), id=place_id)
-    pics = [image.picture.url for image in place.images.all()]
+    pics = [pic.image.url for pic in place.images.all()]
     place_details = {
         "title": place.title,
         "description_short": place.description_short,
@@ -55,4 +55,4 @@ def get_place_details(request, place_id):
         },
         "imgs": pics,
         }
-    return JsonResponse(get_place_details, safe=False, json_dumps_params={'ensure_ascii': False, 'indent': 8})
+    return JsonResponse(place_details, safe=False, json_dumps_params={'ensure_ascii': False, 'indent': 8})
