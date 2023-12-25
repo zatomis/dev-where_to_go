@@ -32,9 +32,19 @@ python manage.py migrate
 SECRET_KEY=<YOUR SECRET KEY>
 DEBUG=True
 ```
+SECRET_KEY=<YOUR SECRET KEY>
+DEBUG=True
+
+**SECRET_KEY** - Секретный ключ для конкретной установки Django. Он используется для обеспечения cryptographic signing,
+и должен быть установлен на уникальное значение. [Сгенерировать](https://djecrety.ir)
+
+**DEBUG** - Булево значение, которое включает/выключает режим отладки. 
+Подробнее по [ссылке](https://django.fun/ru/docs/django/4.0/ref/settings/#debug).
+
 ## Использование (локально)
 
 Для интерфейса администратора нужно создать суперпользователя. Для этого выполните команду:
+
 ```bash
 python manage.py createsuperuser
 ```
