@@ -1,8 +1,10 @@
 import os
+
 import requests
 from django.core.files.base import ContentFile
 from django.core.management.base import BaseCommand
-from places.models import Place, Picture
+
+from places.models import Picture, Place
 
 
 class Command(BaseCommand):
@@ -18,7 +20,7 @@ class Command(BaseCommand):
         response = requests.get(url)
         response.raise_for_status()
         place = response.json()
-        new_place, _ = Place.objects.get_or_create(
+        current_place, _ = Place.objects.get_or_create(
             title=place['title'],
             defaults={
                 'short_description': place['description_short'],
@@ -33,4 +35,4 @@ class Command(BaseCommand):
             response = requests.get(image_url)
             response.raise_for_status()
             image_content = ContentFile(response.content, name=os.path.split(image_url)[1])
-            Picture.objects.create(place_pic=new_place, image=image_content)
+            Picture.objects.create(place_pic=current_place, image=image_content)

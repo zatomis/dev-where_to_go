@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+
 from environs import Env
 
 env = Env()
@@ -16,10 +17,8 @@ SECURE_HSTS_SECONDS = env('SECURE_HSTS_SECONDS', 31536000)
 SESSION_COOKIE_SECURE = env.bool('SESSION_COOKIE_SECURE', False)
 SECURE_HSTS_PRELOAD = env.bool('SECURE_HSTS_PRELOAD', False)
 SECRET_KEY = env('SECRET_KEY')
-# DEBUG = env.bool('DEBUG', True)
-DEBUG = True
-# ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', ['localhost'])
-ALLOWED_HOSTS = ['*']
+DEBUG = env.bool('DEBUG', True)
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', ['localhost'])
 
 INSTALLED_APPS = [
     'django.contrib.admin',

@@ -1,8 +1,11 @@
-from django.shortcuts import render, get_object_or_404
-from places.models import Place
-from django.http import JsonResponse
-from django.urls import reverse
 from urllib.parse import urljoin
+
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
+
+from places.models import Place
+
 
 def show_main(request):
     features = []
