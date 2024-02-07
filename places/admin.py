@@ -7,19 +7,17 @@ from places.models import Picture, Place
 
 MAXHEIGHT = 150
 
+@admin.register(Picture)
 class PlacePicAdmin(admin.ModelAdmin):
     raw_id_fields = ['place_pic']
-
-
-admin.site.register(Picture, PlacePicAdmin)
 
 
 class ImageInline(SortableInlineAdminMixin, admin.TabularInline):
     model = Picture
     extra = 1
-    readonly_fields = ["_pic_preview"]
+    readonly_fields = ["get_pic_preview"]
 
-    def _pic_preview(self, model):
+    def get_pic_preview(self, model):
         return format_html('<img src="{}" style="max-height:{}px; width:auto"/>', mark_safe(model.picture.url), MAXHEIGHT)
 
 
