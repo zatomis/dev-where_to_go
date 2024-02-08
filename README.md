@@ -31,6 +31,7 @@ python manage.py migrate
 ```
 SECRET_KEY=<YOUR SECRET KEY>
 DEBUG=True
+ALLOWED_HOSTS = ['*']
 ```
 
 **SECRET_KEY** - Секретный ключ для конкретной установки Django. Он используется для обеспечения cryptographic signing,
@@ -38,6 +39,9 @@ DEBUG=True
 
 **DEBUG** - Булево значение, которое включает/выключает режим отладки. 
 Подробнее по [ссылке](https://django.fun/ru/docs/django/4.0/ref/settings/#debug).
+
+**ALLOWED_HOSTS** - Список строк, представляющих имена хостов/доменов, которые может обслуживать данный Django-сайт 
+Подробнее по [ссылке](https://django.fun/docs/django/5.0/ref/settings/).
 
 6. Заполнение базы данных тестовыми данными:
 ```

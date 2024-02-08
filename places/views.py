@@ -1,7 +1,6 @@
 from urllib.parse import urljoin
 
-from django.http import JsonResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render
 from django.urls import reverse
 
 from places.models import Place
@@ -14,16 +13,6 @@ def show_main(request):
         main_url = request.build_absolute_uri()
         path_url = reverse("places", args=(place.pk,))
         pictures = [pic.image.url for pic in place.images.all()]
-        place_details = {
-            "title": place.title,
-            "short_description": place.description_short,
-            "long_description": place.description_long,
-            "coordinates": {
-                "lng": place.lon,
-                "lat": place.lat,
-            },
-            "imgs": pictures,
-        }
         place_geodata = {
             "type": "Feature",
             "geometry": {
@@ -31,7 +20,7 @@ def show_main(request):
                 "coordinates": [place.lon, place.lat],
             },
             "properties": {
-                "title":place.description_short,
+                "title": place.description_short,
                 "unique_location": place.unique_location,
                 "detailsUrl": urljoin(main_url, path_url),
             }
@@ -42,20 +31,4 @@ def show_main(request):
       "type": "FeatureCollection",
       "features": features,
     }
-
     return render(request, 'index.html', context={'data': places_geojson})
-
-def get_place_details(request, place_id):
-    place = get_object_or_404(Place.objects.prefetch_related('images'), id=place_id)
-    pics = [pic.image.url for pic in place.images.all()]
-    place_details = {
-        "title": place.title,
-        "description_short": place.description_short,
-        "description_long": place.description_long,
-        "coordinates": {
-            "lng": place.lon,
-            "lat": place.lat,
-        },
-        "imgs": pics,
-        }
-    return JsonResponse(place_details, safe=False, json_dumps_params={'ensure_ascii': False, 'indent': 8})
